@@ -36,3 +36,26 @@ module "ecs" {
   cluster_name = "hotel-cluster"
 
 }
+module "rds" {
+
+  source = "../../modules/rds"
+
+  vpc_id = module.network.vpc_id
+
+  private_db_subnet_ids = module.network.private_db_subnet_ids
+
+  ecs_security_group_id = module.ecs.ecs_security_group_id
+
+  db_name = var.db_name
+
+  db_username = var.db_username
+
+  db_password = var.db_password
+
+  db_instance_class = var.db_instance_class
+
+  backup_retention_period = var.backup_retention_period
+
+  deletion_protection = var.deletion_protection
+
+}
