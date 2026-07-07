@@ -1,29 +1,100 @@
 # Devops-Terraform-RDS
 
-This project provisions AWS infrastructure using Terraform and manages a MySQL database using Docker.
+This project provisions AWS infrastructure using Terraform and sets up a MySQL database using Docker Compose.
+
+The project includes:
+
+- Terraform infrastructure
+- Development and Production environments
+- Local MySQL database
+- Database schema
+- Seed data
+- Database indexing
+- Backup and Restore scripts
 
 ---
 
-# Terraform Backend
-
-Terraform is configured to use:
-
-- Amazon S3 for remote state storage
-- DynamoDB for state locking
-
-Development state:
+# Project Structure
 
 ```
-dev/terraform.tfstate
+Devops-Terraform-RDS/
+
+├── infra/
+│   ├── envs/
+│   │   ├── dev/
+│   │   └── prod/
+│   └── modules/
+│
+├── database/
+│   ├── docker-compose.yml
+│   ├── .env
+│   ├── init.sql
+│   ├── seed.sql
+│   └── indexes.sql
+│
+├── scripts/
+│   ├── backup.sh
+│   └── restore.sh
+│
+├── README.md
+├── providers.tf
+├── variables.tf
+└── terraform.tfvars
 ```
 
-Production state:
+---
+
+# Terraform
+
+The infrastructure creates:
+
+- VPC
+- Public and Private Subnets
+- Internet Gateway
+- Route Tables
+- ECS Security Group
+- RDS MySQL Instance
+
+Separate Terraform environments are available for:
+
+- Development
+- Production
+
+The project also supports using an S3 backend with DynamoDB state locking. For local testing, the backend configuration is currently commented out.
+
+---
+
+# Local Database Setup
+
+Go to the database directory:
+
+```bash
+cd database
+```
+
+Start MySQL using Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+This automatically creates:
+
+- hoteldb database
+- hotel_bookings table
+- booking_events table
+
+Seed data is loaded from:
 
 ```
-prod/terraform.tfstate
+seed.sql
 ```
 
-> Note: If S3 and DynamoDB are not configured yet, Terraform will use the local backend during testing.
+Indexes are created from:
+
+```
+indexes.sql
+```
 
 ---
 
@@ -32,12 +103,16 @@ prod/terraform.tfstate
 Run:
 
 ```bash
-./database/backup.sh
+./scripts/backup.sh
 ```
 
-This creates a timestamped SQL backup.
+The script:
 
-Example backup file:
+- creates the backups folder if it does not exist
+- exports the complete database
+- saves it with the current date and time
+
+Example:
 
 ```
 backups/backup_20260707_183500.sql
@@ -47,22 +122,24 @@ backups/backup_20260707_183500.sql
 
 # Database Restore
 
-Restore a specific backup by running:
+Restore a backup by passing the backup file name.
+
+Example:
 
 ```bash
-./database/restore.sh backups/backup_20260707_183500.sql
+./scripts/restore.sh backups/backup_20260707_183500.sql
 ```
 
-The script reads the SQL statements from the backup file and restores them into the `hoteldb` database.
+The script reads the SQL statements from the backup file and restores them into the **hoteldb** database.
 
 ---
 
 # Verify Restore
 
-Login to MySQL:
+Login into MySQL:
 
 ```bash
-docker exec -it mysql-db mysql -uroot -proot123
+docker exec -it hotel-mysql mysql -uroot -p
 ```
 
 Select the database:
@@ -71,22 +148,46 @@ Select the database:
 USE hoteldb;
 ```
 
-Verify the tables:
+Check the tables:
 
 ```sql
 SHOW TABLES;
 ```
 
-Check booking records:
+Verify booking data:
 
 ```sql
 SELECT COUNT(*) FROM hotel_bookings;
 ```
 
-Check booking events:
+Verify booking events:
 
 ```sql
 SELECT COUNT(*) FROM booking_events;
 ```
 
-If both tables exist and the record count is displayed, the restore operation was successful.
+If both tables exist and records are returned, the restore completed successfully.
+
+---
+
+# Query Optimization
+
+A composite index has been created to optimize queries filtering by:
+
+- city
+- created_at
+
+and grouping by:
+
+- org_id
+- status
+
+This improves query performance by reducing the number of rows scanned.
+
+---
+
+# Notes
+
+- Database configuration is stored in the `.env` file.
+- Docker Compose reads the environment variables from `.env`.
+- Backup files are stored inside the `backups/` directory.
