@@ -37,3 +37,26 @@ variable "availability_zone_1" {
 variable "availability_zone_2" {
   type = string
 }
+variable "db_name" {
+  type = string
+}
+
+variable "db_username" {
+  type = string
+}
+
+variable "db_password" {
+  type = string
+}
+
+variable "db_instance_class" {
+  type = string
+}
+
+variable "backup_retention_period" {
+  type = number
+}
+
+variable "deletion_protection" {
+  type = bool
+}
