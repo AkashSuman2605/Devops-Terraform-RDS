@@ -7,7 +7,7 @@ if [ -z "$FILE" ]; then
     exit 1
 fi
 
-docker exec -i mysql-db \
+docker exec -i hotel-mysql \
 mysql -uroot -proot123 hoteldb \
 < "$FILE"
 
