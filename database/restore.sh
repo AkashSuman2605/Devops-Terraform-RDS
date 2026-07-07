@@ -1,8 +1,14 @@
 #!/bin/bash
 
-echo "Starting MySQL restore..."
+FILE=$1
 
-docker exec -i hotel-mysql \
-mysql -uadmin -pPassword@123 hoteldb < hoteldb_backup.sql
+if [ -z "$FILE" ]; then
+    echo "Usage: ./restore.sh backup_file.sql"
+    exit 1
+fi
+
+docker exec -i mysql-db \
+mysql -uroot -proot123 hoteldb \
+< "$FILE"
 
 echo "Database restored successfully."
