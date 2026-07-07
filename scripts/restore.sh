@@ -8,7 +8,7 @@ if [ -z "$FILE" ]; then
 fi
 
 docker exec -i hotel-mysql \
-mysql -uroot -proot123 hoteldb \
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} \
 < "$FILE"
 
 echo "Database restored successfully."
