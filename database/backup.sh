@@ -1,8 +1,11 @@
 #!/bin/bash
 
-echo "Starting MySQL backup..."
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
-docker exec hotel-mysql \
-mysqldump -uadmin -pPassword@123 hoteldb > hoteldb_backup.sql
+mkdir -p backups
 
-echo "Backup completed successfully."
+docker exec mysql-db \
+mysqldump -uroot -proot123 hoteldb \
+> backups/backup_$TIMESTAMP.sql
+
+echo "Backup created successfully."
