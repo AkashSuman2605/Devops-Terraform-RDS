@@ -1,5 +1,5 @@
-terraform {
 /*
+terraform {
   backend "s3" {
 
     bucket = "hotel-booking-terraform-state"
@@ -13,5 +13,6 @@ terraform {
     encrypt = true
 
   }
-*/
+
 }
+*/
