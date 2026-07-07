@@ -1,72 +1,44 @@
 USE hoteldb;
 
-DELIMITER $$
+INSERT INTO hotel_bookings
+(id, org_id, hotel_id, city, checkin_date, checkout_date, amount, status, created_at)
+VALUES
+('B001','ORG001','HOTEL001','Delhi','2026-07-10','2026-07-12',2500.00,'CONFIRMED',NOW()),
 
-CREATE PROCEDURE seed_bookings()
-BEGIN
+('B002','ORG001','HOTEL002','Mumbai','2026-07-11','2026-07-13',3200.00,'CREATED',NOW()),
 
-    DECLARE i INT DEFAULT 1;
+('B003','ORG002','HOTEL003','Bengaluru','2026-07-12','2026-07-15',4500.00,'COMPLETED',NOW()),
 
-    WHILE i <= 100 DO
+('B004','ORG003','HOTEL004','Hyderabad','2026-07-13','2026-07-16',2800.00,'CONFIRMED',NOW()),
 
-        INSERT INTO hotel_bookings
-        (
-            id,
-            org_id,
-            hotel_id,
-            city,
-            checkin_date,
-            checkout_date,
-            amount,
-            status,
-            created_at
-        )
+('B005','ORG002','HOTEL005','Pune','2026-07-14','2026-07-17',5100.00,'CANCELLED',NOW()),
 
-        VALUES
-        (
+('B006','ORG001','HOTEL006','Delhi','2026-07-15','2026-07-18',3500.00,'CREATED',NOW()),
 
-            UUID(),
+('B007','ORG003','HOTEL007','Mumbai','2026-07-16','2026-07-18',2900.00,'CONFIRMED',NOW()),
 
-            UUID(),
+('B008','ORG004','HOTEL008','Chennai','2026-07-17','2026-07-20',4700.00,'COMPLETED',NOW()),
 
-            CONCAT('HOTEL-', FLOOR(1 + RAND()*20)),
+('B009','ORG005','HOTEL009','Delhi','2026-07-18','2026-07-22',6200.00,'CONFIRMED',NOW()),
 
-            ELT(
-                FLOOR(1 + RAND()*6),
-                'Delhi',
-                'Mumbai',
-                'Bengaluru',
-                'Hyderabad',
-                'Chennai',
-                'Pune'
-            ),
+('B010','ORG002','HOTEL010','Pune','2026-07-19','2026-07-21',2700.00,'CREATED',NOW()),
 
-            CURDATE(),
+('B011','ORG004','HOTEL011','Hyderabad','2026-07-20','2026-07-22',3900.00,'CONFIRMED',NOW()),
 
-            DATE_ADD(CURDATE(), INTERVAL FLOOR(1 + RAND()*5) DAY),
+('B012','ORG005','HOTEL012','Delhi','2026-07-21','2026-07-23',3100.00,'COMPLETED',NOW()),
 
-            ROUND(1000 + RAND()*24000,2),
+('B013','ORG001','HOTEL013','Mumbai','2026-07-22','2026-07-24',5600.00,'CREATED',NOW()),
 
-            ELT(
-                FLOOR(1 + RAND()*4),
-                'CREATED',
-                'CONFIRMED',
-                'COMPLETED',
-                'CANCELLED'
-            ),
+('B014','ORG003','HOTEL014','Bengaluru','2026-07-23','2026-07-26',4200.00,'CONFIRMED',NOW()),
 
-            NOW() - INTERVAL FLOOR(RAND()*30) DAY
+('B015','ORG004','HOTEL015','Chennai','2026-07-24','2026-07-27',3600.00,'COMPLETED',NOW()),
 
-        );
+('B016','ORG002','HOTEL016','Delhi','2026-07-25','2026-07-28',4900.00,'CANCELLED',NOW()),
 
-        SET i = i + 1;
+('B017','ORG005','HOTEL017','Mumbai','2026-07-26','2026-07-29',5300.00,'CONFIRMED',NOW()),
 
-    END WHILE;
+('B018','ORG001','HOTEL018','Pune','2026-07-27','2026-07-30',6100.00,'CREATED',NOW()),
 
-END $$
+('B019','ORG003','HOTEL019','Hyderabad','2026-07-28','2026-07-31',3400.00,'COMPLETED',NOW()),
 
-DELIMITER ;
-
-CALL seed_bookings();
-
-DROP PROCEDURE seed_bookings();
+('B020','ORG004','HOTEL020','Delhi','2026-07-29','2026-08-01',2800.00,'CONFIRMED',NOW());
