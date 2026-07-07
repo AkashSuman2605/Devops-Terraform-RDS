@@ -19,7 +19,7 @@ prod/terraform.tfstate
 Run:
 
 ```bash
-./scripts/backup.sh
+./database/backup.sh
 ```
 
 This creates a timestamped SQL backup inside the backups folder.
@@ -35,7 +35,7 @@ backups/hoteldb_20260707_183500.sql
 Run:
 
 ```bash
-./scripts/restore.sh
+./database/restore.sh
 ```
 
 This restores the latest backup into the MySQL database.
