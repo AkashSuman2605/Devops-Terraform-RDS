@@ -12,13 +12,13 @@ services:
 
     environment:
 
-      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
-      MYSQL_DATABASE: hoteldb
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
 
-      MYSQL_USER: admin
+      MYSQL_USER: ${MYSQL_USER}
 
-      MYSQL_PASSWORD: Password@123
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
     ports:
 
