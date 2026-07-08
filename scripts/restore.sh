@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$(dirname "$0")/../database/.env"
+
 FILE=$1
 
 if [ -z "$FILE" ]; then
