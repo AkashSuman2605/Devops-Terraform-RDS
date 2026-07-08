@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$(dirname "$0")/../database/.env"
+
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
 mkdir -p backups
