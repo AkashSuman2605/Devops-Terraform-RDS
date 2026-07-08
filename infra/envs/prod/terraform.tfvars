@@ -24,6 +24,5 @@ db_instance_class = "db.t3.small"
 
 backup_retention_period = 30
 
-deletion_protection = true
 
 deletion_protection = true
