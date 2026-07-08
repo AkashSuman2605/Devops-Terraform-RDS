@@ -43,6 +43,23 @@ Devops-Terraform-RDS/
 ```
 
 ---
+## Environment Setup(OPTIONAL)
+
+For Amazon Linux 2023, a setup script is provided to install all required dependencies.
+
+Run:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+The script installs and configures:
+
+- Git
+- Docker
+- Docker Compose
+- Terraform
 
 # Terraform
 
