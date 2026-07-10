@@ -1,4 +1,4 @@
-# Devops-Terraform-RDS
+# Infrastructure as Code (Terraform) with MySQL Backup & Recovery
 
 This project provisions AWS infrastructure using Terraform and sets up a MySQL database using Docker Compose.
 
